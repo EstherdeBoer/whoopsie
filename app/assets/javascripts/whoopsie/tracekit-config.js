@@ -1,18 +1,7 @@
-if (window.Rails.env === "development" || window.Rails.env === "test") {
-  TraceKit.report.subscribe(function(errorReport) {
-    console.log('TraceKit report', JSON.stringify(errorReport))
-  })
-
-  TraceKit.wrap = function(func) {
-    function wrapped() {
-      return func.apply(this, arguments);
-    }
-    return wrapped;
-  }
-} else {
+if (window.Whoopsie.enabled) {
   TraceKit.report.subscribe(function(errorReport) {
     jQuery.ajax({
-      url: "/errors",
+      url: window.Whoopsie.client_notification_url,
       type: "POST",
       data: {
         error_report: errorReport,
@@ -30,6 +19,17 @@ if (window.Rails.env === "development" || window.Rails.env === "test") {
       return null;
     }
   });
+} else {
+  TraceKit.report.subscribe(function(errorReport) {
+    console.log('TraceKit report', JSON.stringify(errorReport))
+  })
+
+  TraceKit.wrap = function(func) {
+    function wrapped() {
+      return func.apply(this, arguments);
+    }
+    return wrapped;
+  }
 }
 
 TraceKit.run = function(func){
