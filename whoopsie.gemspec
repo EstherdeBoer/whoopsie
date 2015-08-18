@@ -5,7 +5,7 @@ require "whoopsie/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "oxos-whoopsie"
+  s.name        = "whoopsie"
   s.version     = Whoopsie::VERSION
   s.authors     = ["Wojtek Kruszewski"]
   s.email       = ["wojtek@oxos.pl"]
