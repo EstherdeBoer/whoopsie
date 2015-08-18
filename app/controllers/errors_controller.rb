@@ -8,7 +8,7 @@ class ErrorsController < ApplicationController
   newrelic_ignore if defined?(NewRelic) && respond_to?(:newrelic_ignore)
 
   def create
-    return unless Rails.application.config.exception_notifications
+    return unless Rails.application.config.whoopsie.enable
     report = params[:error_report]
     report.merge!(params[:extra]) if params[:extra]
     ExceptionNotifier.notify_exception JavaScriptError.new(report["message"]), data: report
