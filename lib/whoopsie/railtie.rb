@@ -1,6 +1,7 @@
 module Whoopsie
   class Railtie < Rails::Railtie
-    config.whoopsie = ActiveSupport::OrderedOptions.new
+    Config = Struct.new(:enable)
+    config.whoopsie = Config.new
 
     initializer "whoopsie.configure_middleware" do
       Rails.application.middleware.insert_before ActiveRecord::ConnectionAdapters::ConnectionManagement, ExceptionNotification::Rack
