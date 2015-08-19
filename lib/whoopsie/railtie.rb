@@ -1,6 +1,6 @@
 module Whoopsie
   class Railtie < Rails::Railtie
-    Config = Struct.new(:enable)
+    Config = Struct.new(:enable, :recipients, :sender)
     config.whoopsie = Config.new
 
     initializer "whoopsie.configure_middleware" do
@@ -16,6 +16,12 @@ module Whoopsie
         config.ignore_if do |exception, options|
           ! Rails.application.config.whoopsie.enable
         end
+
+        config.add_notifier :email, {
+          :email_prefix         => "[ERROR] ",
+          :sender_address       => Rails.application.config.whoopsie.sender,
+          :exception_recipients => Rails.application.config.whoopsie.recipients,
+        }
       end
     end
   end
