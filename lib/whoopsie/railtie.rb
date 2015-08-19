@@ -13,15 +13,17 @@ module Whoopsie
 
         # Adds a condition to decide when an exception must be ignored or not.
         # The ignore_if method can be invoked multiple times to add extra conditions.
-        config.ignore_if do |exception, options|
-          ! Rails.application.config.whoopsie.enable
-        end
+        # config.ignore_if do |exception, options|
+        #   ! Rails.application.config.whoopsie.enable
+        # end
 
-        config.add_notifier :email, {
-          :email_prefix         => "[ERROR] ",
-          :sender_address       => Rails.application.config.whoopsie.sender,
-          :exception_recipients => Rails.application.config.whoopsie.recipients,
-        }
+        if Rails.application.config.whoopsie.enable
+          config.add_notifier :email, {
+            :email_prefix         => "[ERROR] ",
+            :sender_address       => Rails.application.config.whoopsie.sender,
+            :exception_recipients => Rails.application.config.whoopsie.recipients,
+          }
+        end
       end
     end
   end
