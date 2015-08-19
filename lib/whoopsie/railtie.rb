@@ -28,13 +28,3 @@ module Whoopsie
     end
   end
 end
-
-ExceptionNotifier.module_eval do
-  def self.handle_exception(exception, *extra)
-    if Rails.application.config.whoopsie.enable
-      notify_exception(exception, *extra)
-    else
-      raise exception
-    end
-  end
-end
