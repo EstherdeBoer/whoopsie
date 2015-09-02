@@ -1,4 +1,8 @@
-if (window.Whoopsie.enabled) {
+if (typeof window.Whoopsie !== "object") {
+  alert("Error notifications not configured. Did you include whoopsie_helper?")
+}
+
+if (window.Whoopsie && window.Whoopsie.enabled) {
   TraceKit.report.subscribe(function(errorReport) {
     jQuery.ajax({
       url: window.Whoopsie.client_notification_url,
