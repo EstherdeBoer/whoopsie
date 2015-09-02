@@ -40,4 +40,11 @@ TraceKit.run = function(func){
   TraceKit.wrap(func).apply(this, arguments)
 }
 
+Whoopsie.wrap = TraceKit.wrap;
+
+Whoopsie.run = function(func){
+  Whoopsie.wrap(func).apply(this, arguments)
+}
+
+
 $.ajaxSettings.converters["text script"] = TraceKit.wrap(window.eval)
