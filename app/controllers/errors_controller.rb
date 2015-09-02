@@ -21,4 +21,10 @@ class ErrorsController < ApplicationController
   def bang
     raise "boom!"
   end
+
+  def ping
+    app_name  = Rails.application.engine_name
+    db_status = (ActiveRecord::Base.connection.tables.length > 0) ? "ok" : "empty"
+    render plain: "#{app_name} #{db_status}"
+  end
 end
