@@ -11,6 +11,7 @@ class ErrorsController < ApplicationController
     if Rails.application.config.whoopsie.enable
       report = params[:error_report]
       report.merge!(params[:extra]) if params[:extra]
+      report.merge!(headers: request.headers.to_h)
       ExceptionNotifier.notify_exception JavaScriptError.new(report["message"]), data: report
       render plain: "error acknowledged"
     else
