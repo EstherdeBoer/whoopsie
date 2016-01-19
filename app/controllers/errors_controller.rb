@@ -1,4 +1,6 @@
 class ErrorsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   class JavaScriptError < Struct.new(:message)
     def backtrace
       []
