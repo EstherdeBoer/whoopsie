@@ -9,8 +9,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= yield %>
 
-<%= yield %>
-
+  <script>
+    window.loggingInformation = {time: (new Date()).toString(), location: window.location.toString()};
+  </script>
 </body>
 </html>
