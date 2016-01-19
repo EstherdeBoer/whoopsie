@@ -9,7 +9,7 @@ if (window.Whoopsie && window.Whoopsie.enabled) {
       type: "POST",
       data: {
         error_report: errorReport,
-        extra: window.loggingInformation
+        extra: Whoopsie.extra(),
       }
     });
     return true;
