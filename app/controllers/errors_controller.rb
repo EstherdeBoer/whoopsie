@@ -1,20 +1,17 @@
 class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  class JavaScriptError < Struct.new(:message)
-    def backtrace
-      []
-    end
+  class JavaScriptError < StandardError
   end
 
   newrelic_ignore if defined?(NewRelic) && respond_to?(:newrelic_ignore)
 
   def create
     if Rails.application.config.whoopsie.enable
+      exception = JavaScriptError.new(params[:error_report][:message])
       report = params[:error_report]
       report.merge!(params[:extra]) if params[:extra]
-      report.merge!(headers: request.headers.to_h)
-      ExceptionNotifier.notify_exception JavaScriptError.new(report["message"]), data: report
+      ExceptionNotifier.notify_exception exception, env: request.env, data: report
       render plain: "error acknowledged"
     else
       render plain: "error ignored"
