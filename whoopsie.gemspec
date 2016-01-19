@@ -19,4 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 4.2.3", "<= 5.0.0"
   s.add_dependency "exception_notification", "~> 4.0.1"
+  s.add_development_dependency "sqlite3", "~> 1.3.4"
+  s.add_development_dependency "jquery-rails", "~> 4.0.3"
 end
